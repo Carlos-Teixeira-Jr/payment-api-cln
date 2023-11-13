@@ -65,4 +65,12 @@ export class PaymentService {
   async deleteSubscription(subscription_id: string) {
     return await this.asaasAPI.deleteSubscription(subscription_id)
   }
+
+  async getUnpaidCharges(subscription_id: string) {
+    return await this.asaasAPI.getUnpaidCharges(subscription_id)
+  }
+
+  async tokenize(body: any) {
+    return await this.asaasAPI.tokenize(body)
+  }
 }
