@@ -222,6 +222,26 @@ class AssasAPI {
       throw error
     }
   }
+
+  async getUnpaidCharges(subscription_id: string) {
+    try {
+      const unpaidCharges = await this.assasApi.get(`/subscriptions/${subscription_id}/payments`)
+
+      return unpaidCharges?.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async tokenize(body: any) {
+    try {
+      const creditCardToken = await this.assasApi.post(`/creditCard/tokenize`, body)
+
+      return creditCardToken?.data
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default AssasAPI

@@ -105,4 +105,16 @@ export class PaymentController {
     )
     return subscription
   }
+
+  @Get('subscriptions/:subscription_id/payments')
+  async getUnpaidCharges(@Param('subscription_id') subscription_id: string) {
+    const unpaidCharges = await this.paymentService.getUnpaidCharges(subscription_id)
+    return unpaidCharges
+  }
+
+  @Post('tokenize')
+  async tokenize(@Body() body: any) {
+    const creditCardToken = await this.paymentService.tokenize(body)
+    return creditCardToken
+  }
 }
