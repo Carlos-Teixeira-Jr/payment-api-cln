@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common'
 import { CustomerService } from './customer.service'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { CreateCustomerDto } from './dto/create-customer.dto'
@@ -28,5 +28,12 @@ export class CustomerController {
   async createCustomer(@Body() customer: CreateCustomerDto) {
     const createdCustomer = await this.customerService.createCustomer(customer)
     return createdCustomer
+  }
+
+  @ApiOperation({ summary: 'Deleta cliente pelo customerId' })
+  @Delete(':customerId')
+  async deleteCustomer(@Param('customerId') customerId: string) {
+    const customer = await this.customerService.deleteCustomer(customerId)
+    return customer
   }
 }

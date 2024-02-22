@@ -68,6 +68,20 @@ class AssasAPI {
     }
   }
 
+  async deleteCustomer(customerId: string) {
+    try {
+      const customer = await this.assasApi.delete(`/customers/${customerId}`)
+
+      return customer?.data;
+    } catch (error) {
+      const errors = error?.response?.data?.errors
+
+      throw new Error(
+        errors ? JSON.stringify(errors) : 'Ocorreu um erro ao criar a cobrança',
+      )
+    }
+  }
+
   async createCharge(charge: CreateChargeDto) {
     try {
       const createdCharge = await this.assasApi.post(`/payments`, charge)
@@ -161,6 +175,8 @@ class AssasAPI {
         `/subscriptions`,
         subscription,
       )
+      console.log("🚀 ~ AssasAPI ~ createSubscription ~ createdSubscription:", createdSubscription)
+
 
       return createdSubscription?.data
     } catch (error) {
@@ -204,6 +220,22 @@ class AssasAPI {
       const subscriptions = await this.assasApi.get(
         `/subscriptions?offset=${offset}&limit=${limit}`,
       )
+
+      return subscriptions?.data?.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getSubscriptionsByCustomer(customer_id: any) {
+    console.log("🚀 ~ AssasAPI ~ getSubscriptionsByCustomer ~ customer_id:", customer_id.customer_id)
+    try {
+
+      const subscriptions = await this.assasApi.get(
+        `/subscriptions?customer=${customer_id.customer_id}`,
+      )
+        console.log("🚀 ~ AssasAPI ~ getSubscriptionsByCustomer ~ `/subscriptions?customer=${customer_id}`:", `/subscriptions?customer=${customer_id}`)
+      console.log("🚀 ~ AssasAPI ~ getSubscriptionsByCustomer ~ subscriptions:", subscriptions.data)
 
       return subscriptions?.data?.data
     } catch (error) {

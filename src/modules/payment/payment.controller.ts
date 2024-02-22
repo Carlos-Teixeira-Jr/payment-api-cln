@@ -69,7 +69,7 @@ export class PaymentController {
     const createdSubscription = await this.paymentService.createSubscription(
       subscription,
     )
-    return createdSubscription
+    return createdSubscription;
   }
 
   @Post('subscription/:subscription_id')
@@ -96,6 +96,12 @@ export class PaymentController {
   async getSubscriptions(@Query() query: PaginationQuery) {
     const subscriptions = await this.paymentService.getSubscriptions(query)
     return subscriptions
+  }
+
+  @Get('subscriptionsByCustomer/:customer_id')
+  async getSubscriptionsByCustomer(@Param() customer_id: string) {
+    const subscriptions = await this.paymentService.getSubscriptionsByCustomer(customer_id)
+    return subscriptions;
   }
 
   @Delete('subscription/:subscription_id')

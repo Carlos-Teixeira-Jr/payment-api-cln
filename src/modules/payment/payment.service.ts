@@ -62,6 +62,10 @@ export class PaymentService {
     return await this.asaasAPI.getSubscriptions(query)
   }
 
+  async getSubscriptionsByCustomer(customer_id: string) {
+    return await this.asaasAPI.getSubscriptionsByCustomer(customer_id)
+  }
+
   async deleteSubscription(subscription_id: string) {
     return await this.asaasAPI.deleteSubscription(subscription_id)
   }
