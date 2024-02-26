@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common'
 import { PaymentService } from './payment.service'
@@ -28,7 +29,7 @@ export class PaymentController {
   }
 
   @ApiOperation({ summary: 'Lista cobranças de um cliente' })
-  @Get('charges/:cpfCnpj')
+  @Get('charges-by-cpfcnpj/:cpfCnpj')
   async getChargeByCustomer(@Param('cpfCnpj') cpfCnpj: string) {
     const charges = await this.paymentService.getChargeByCustomer(cpfCnpj)
     return charges
@@ -64,6 +65,7 @@ export class PaymentController {
     return charges
   }
 
+  @ApiOperation({ summary: 'Cria uma nova assinatura' })
   @Post('subscription')
   async createSubscription(@Body() subscription: CreateSubscriptionDto) {
     const createdSubscription = await this.paymentService.createSubscription(
@@ -115,12 +117,33 @@ export class PaymentController {
   @Get('subscriptions/:subscription_id/payments')
   async getUnpaidCharges(@Param('subscription_id') subscription_id: string) {
     const unpaidCharges = await this.paymentService.getUnpaidCharges(subscription_id)
-    return unpaidCharges
+    return unpaidCharges;
   }
 
   @Post('tokenize')
   async tokenize(@Body() body: any) {
-    const creditCardToken = await this.paymentService.tokenize(body)
+    const creditCardToken = await this.paymentService.tokenize(body);
     return creditCardToken
+  }
+
+  @Delete('charge/:charge_id')
+  async deleteCharge(@Param('charge_id') charge_id: string) {
+    const deletedCharge = await this.paymentService.deleteCharge(charge_id);
+
+    return deletedCharge;
+  }
+
+  @Get('charges/:subscription_id')
+  async getChargesBySubscription(@Param('subscription_id') subscription_id: string) {
+    const charges = await this.paymentService.getChargesBySubscription(subscription_id);
+
+    return charges;
+  }
+
+  @Post('charges/:charge_id')
+  async payChargeWithCreditCard(@Param('charge_id') charge_id: string, @Body() body: any) {
+    const payment = await this.paymentService.payChargeWithCreditCard(charge_id, body);
+
+    return payment;
   }
 }
