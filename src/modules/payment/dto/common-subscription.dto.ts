@@ -256,10 +256,11 @@ export class CommonSubscriptionDto {
     example: '2021-06-10',
     required: true,
   })
-  @IsString()
+  //@IsString()
   @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
   nextDueDate: Date
+  
 
   @ApiProperty({
     description: 'Informações de desconto',
