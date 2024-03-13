@@ -44,7 +44,7 @@ export class PaymentService {
   }
 
   async createSubscription(subscription: CreateSubscriptionDto) {
-    return await this.asaasAPI.createSubscription(subscription)
+    return await this.asaasAPI.createSubscription(subscription);
   }
 
   async updateSubscription(
@@ -62,6 +62,10 @@ export class PaymentService {
     return await this.asaasAPI.getSubscriptions(query)
   }
 
+  async getSubscriptionsByCustomer(customer_id: string) {
+    return await this.asaasAPI.getSubscriptionsByCustomer(customer_id)
+  }
+
   async deleteSubscription(subscription_id: string) {
     return await this.asaasAPI.deleteSubscription(subscription_id)
   }
@@ -72,5 +76,17 @@ export class PaymentService {
 
   async tokenize(body: any) {
     return await this.asaasAPI.tokenize(body)
+  }
+
+  async deleteCharge(charge_id: string) {
+    return await this.asaasAPI.deleteCharge(charge_id);
+  }
+
+  async getChargesBySubscription(subscription_id: string) {
+    return await this.asaasAPI.getChargesBySubscription(subscription_id);
+  }
+
+  async payChargeWithCreditCard(charge_id: string, body: any) {
+    return await this.asaasAPI.payChargeWithCreditCard(charge_id, body)
   }
 }

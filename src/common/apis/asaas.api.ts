@@ -69,6 +69,20 @@ class AssasAPI {
     }
   }
 
+  async deleteCustomer(customerId: string) {
+    try {
+      const customer = await this.assasApi.delete(`/customers/${customerId}`)
+
+      return customer?.data;
+    } catch (error) {
+      const errors = error?.response?.data?.errors
+
+      throw new Error(
+        errors ? JSON.stringify(errors) : 'Ocorreu um erro ao criar a cobrança',
+      )
+    }
+  }
+
   async createCharge(charge: CreateChargeDto) {
     try {
       const createdCharge = await this.assasApi.post(`/payments`, charge)
@@ -162,6 +176,8 @@ class AssasAPI {
         `/subscriptions`,
         subscription,
       )
+      console.log("🚀 ~ AssasAPI ~ createSubscription ~ createdSubscription:", createdSubscription)
+
 
       return createdSubscription?.data
     } catch (error) {
@@ -174,12 +190,12 @@ class AssasAPI {
     subscription: UpdateSubscriptionDto,
   ) {
     try {
-      const updatedSubscription = await this.assasApi.post(
+      const updatedSubscription = await this.assasApi.put(
         `/subscriptions/${subscription_id}`,
         subscription,
       )
 
-      return updatedSubscription?.data
+      return updatedSubscription?.data;
     } catch (error) {
       throw error
     }
@@ -204,6 +220,20 @@ class AssasAPI {
 
       const subscriptions = await this.assasApi.get(
         `/subscriptions?offset=${offset}&limit=${limit}`,
+      )
+
+      return subscriptions?.data?.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getSubscriptionsByCustomer(customer_id: any) {
+    console.log("🚀 ~ AssasAPI ~ getSubscriptionsByCustomer ~ customer_id:", customer_id.customer_id)
+    try {
+
+      const subscriptions = await this.assasApi.get(
+        `/subscriptions?customer=${customer_id.customer_id}`,
       )
 
       return subscriptions?.data?.data
@@ -239,6 +269,40 @@ class AssasAPI {
       const creditCardToken = await this.assasApi.post(`/creditCard/tokenize`, body)
 
       return creditCardToken?.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async deleteCharge(charge_id: string) {
+    try {
+      const deletedCharge = await this.assasApi.delete(`/payments/${charge_id}`);
+
+      // Remover propriedades circulares
+      const { id, status, message } = deletedCharge;
+
+      return { id, status, message };
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async getChargesBySubscription(subscription_id: string) {
+    try {
+      const charges = await this.assasApi.get(`/subscriptions/${subscription_id}/payments`);
+
+      return charges?.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async payChargeWithCreditCard(charge_id: string, body: any) {
+    try {
+      const payment = await this.assasApi.post(`/payments/${charge_id}/payWithCreditCard`, body);
+
+      console.log("🚀 ~ AssasAPI ~ payChargeWithCreditCard ~ payment:", payment);
+      return payment;
     } catch (error) {
       throw error
     }

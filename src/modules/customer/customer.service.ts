@@ -18,4 +18,8 @@ export class CustomerService {
   async getCustomers(query: PaginationQuery) {
     return await this.asaasAPI.getCustomers(query)
   }
+
+  async deleteCustomer(customerId: string) {
+    return await this.asaasAPI.deleteCustomer(customerId)
+  }
 }
