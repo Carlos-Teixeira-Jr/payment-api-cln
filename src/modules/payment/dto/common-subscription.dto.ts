@@ -256,7 +256,6 @@ export class CommonSubscriptionDto {
     example: '2021-06-10',
     required: true,
   })
-  //@IsString()
   @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
   nextDueDate: Date

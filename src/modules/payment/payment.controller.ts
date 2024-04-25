@@ -65,6 +65,7 @@ export class PaymentController {
     return charges
   }
 
+    // To-do: tipar o dto
   @ApiOperation({ summary: 'Cria uma nova assinatura' })
   @Post('subscription')
   async createSubscription(@Body() subscription: CreateSubscriptionDto) {
@@ -74,10 +75,10 @@ export class PaymentController {
     return createdSubscription;
   }
 
-  @Post('subscription/:subscription_id')
+  @Post('update-subscription/:subscription_id')
   async updateSubscription(
     @Param('subscription_id') subscription_id: string,
-    @Body() subscription: UpdateSubscriptionDto,
+    @Body() subscription: any,
   ) {
     const updatedSubscription = await this.paymentService.updateSubscription(
       subscription_id,

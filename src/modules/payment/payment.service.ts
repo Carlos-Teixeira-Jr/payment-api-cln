@@ -43,6 +43,7 @@ export class PaymentService {
     return await this.asaasAPI.refundCharge(payment_id, value, description)
   }
 
+  // To-do: tipar o dto
   async createSubscription(subscription: CreateSubscriptionDto) {
     return await this.asaasAPI.createSubscription(subscription);
   }

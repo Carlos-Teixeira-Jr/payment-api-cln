@@ -171,13 +171,13 @@ class AssasAPI {
   }
 
   async createSubscription(subscription: CreateSubscriptionDto) {
+    console.log("🚀 ~ AssasAPI ~ createSubscription ~ subscription:", subscription)
     try {
       const createdSubscription = await this.assasApi.post(
         `/subscriptions`,
         subscription,
-      )
-      console.log("🚀 ~ AssasAPI ~ createSubscription ~ createdSubscription:", createdSubscription)
-
+      ).then((res) => res.json()).catch((error) => console.log(error.response.data.errors))
+      
 
       return createdSubscription?.data
     } catch (error) {
