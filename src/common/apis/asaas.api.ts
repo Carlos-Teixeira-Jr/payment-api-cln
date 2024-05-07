@@ -176,10 +176,9 @@ class AssasAPI {
       const createdSubscription = await this.assasApi.post(
         `/subscriptions`,
         subscription,
-      ).then((res) => res.json()).catch((error) => console.log(error.response.data.errors))
-      
+      )
 
-      return createdSubscription?.data
+      return createdSubscription?.data;
     } catch (error) {
       throw error
     }

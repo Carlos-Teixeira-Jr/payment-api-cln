@@ -68,7 +68,7 @@ export class PaymentController {
     // To-do: tipar o dto
   @ApiOperation({ summary: 'Cria uma nova assinatura' })
   @Post('subscription')
-  async createSubscription(@Body() subscription: CreateSubscriptionDto) {
+  async createSubscription(@Body() subscription: any) {
     const createdSubscription = await this.paymentService.createSubscription(
       subscription,
     )
