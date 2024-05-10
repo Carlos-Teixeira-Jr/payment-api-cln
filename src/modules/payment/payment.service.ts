@@ -52,7 +52,8 @@ export class PaymentService {
     subscription_id: string,
     subscription: UpdateSubscriptionDto,
   ) {
-    return await this.asaasAPI.updateSubscription(subscription_id, subscription)
+    const updatedSubscription = await this.asaasAPI.updateSubscription(subscription_id, subscription)
+    return updatedSubscription
   }
 
   async getSubscription(subscription_id: string) {
