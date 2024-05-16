@@ -1,4 +1,4 @@
-import { IsBoolean } from 'class-validator'
+import { IsBoolean, IsNumber } from 'class-validator'
 
 import { ApiProperty } from '@nestjs/swagger'
 import { CommonSubscriptionDto } from './common-subscription.dto'
@@ -12,4 +12,7 @@ export class UpdateSubscriptionDto extends CommonSubscriptionDto {
   })
   @IsBoolean()
   updatePendingPayment?: boolean = false
+
+  @IsNumber()
+  value: number
 }

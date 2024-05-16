@@ -86,6 +86,7 @@ export class PaymentController {
     )
     return updatedSubscription
   }
+  
 
   @Get('subscription/:subscription_id')
   async getSubscription(@Param('subscription_id') subscription_id: string) {
