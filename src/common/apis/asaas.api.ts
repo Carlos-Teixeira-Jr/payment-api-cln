@@ -16,7 +16,6 @@ class AssasAPI {
       },
     })
   }
-  
 
   async getCustomer(cpfCnpj: string) {
     try {
